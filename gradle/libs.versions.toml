@@ -1,0 +1,6 @@
+[versions]
+api-key-pool = "0.0.1"
+kotlin = "2.2.20"
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

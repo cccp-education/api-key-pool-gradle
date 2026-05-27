@@ -1,0 +1,43 @@
+= Session 002 — Architecture Racine Consommateur + Plugin Independant + Renommage + git init
+:session: 002
+:date: 2026-05-27
+:status: TERMINE
+
+== Contexte
+
+Le projet api-key-pool etait un build standalone sans separation consommateur/plugin.
+Transformation vers l'architecture « Racine Consommateur + Plugin Independant »
+decrite dans l'article 0124 du blog cheroliv.com. Renommage du repertoire en
+api-key-pool-gradle pour respecter la convention foundry/public/.
+
+== Actions
+
+1. ✅ Creation `api-key-pool-plugin/` — build independant (src, tests, wrapper, gradle)
+2. ✅ Creation root consommateur dogfood (build.gradle.kts minimal, settings.gradle.kts)
+3. ✅ Preservation `rootProject.name = "api-key-pool"` (artifactId Maven inchange)
+4. ✅ MAJ AGENT.adoc : avertissement, architecture Racine+Plugin, commandes
+5. ✅ MAJ .agents/INDEX.adoc : schema architecture, portefeuille
+6. ✅ MAJ build.gradle.kts SCM URLs → github.com/cheroliv/api-key-pool
+7. ✅ Renommage repertoire → `foundry/public/api-key-pool-gradle/`
+8. ✅ git init dans le nouveau projet
+9. ✅ Ajout .gitignore standard (Gradle, Kotlin, IDE, OS)
+10. ✅ MAJ references dans configuration/ (DESIGN_CI_LLM_POOL_ROTATION, workspace-engine, AGENT_GOVERNANCE)
+
+== Fichiers principaux
+
+- `api-key-pool-plugin/build.gradle.kts` : java-library + maven-publish + signing
+- `api-key-pool-plugin/settings.gradle.kts` : rootProject.name = "api-key-pool"
+- `api-key-pool-plugin/gradle/libs.versions.toml` : catalogue complet
+- `api-key-pool-plugin/.agents/` : gouvernance agent (INDEX, SESSIONS, sessions/)
+- `api-key-pool-plugin/AGENT.adoc` : directives mises a jour
+- `build.gradle.kts` (racine) : consommateur minimal
+- `settings.gradle.kts` (racine) : rootProject.name = "api-key-pool"
+- `.gitignore` : standard Gradle + IDE + OS
+
+== Workflow
+
+[source,shell]
+----
+cd api-key-pool-plugin && ./gradlew publishToMavenLocal  # builder la librairie
+cd .. && ./gradlew build                                  # exercer le dogfood
+----
