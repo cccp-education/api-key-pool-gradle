@@ -1,0 +1,31 @@
+= Session 003 — Borough-isation Liberty 🗽
+:date: 2026-06-02
+:type: governance
+:score: 10/10
+:project: api-key-pool-gradle (Liberty 🗽)
+:dashboard_number: 25
+
+== Contexte
+
+Borough-isation de api-key-pool-gradle dans le portefeuille workspace. Le projet `foundry/public/api-key-pool-gradle/` reçoit le borough Liberty 🗽 et devient le 25ème borough gouverné.
+
+Cette session est purement gouvernance — aucun code source modifié.
+
+== Opérations réalisées
+
+. Création du rapport de session `003-borough-isation-liberty.adoc`
+. Mise à jour `SESSIONS_HISTORY.adoc` — ajout session 003
+. Mise à jour `INDEX.adoc` — session en cours passe à 004
+
+== Artefacts modifiés
+
+|===
+| Fichier | Action
+| `.agents/sessions/003-borough-isation-liberty.adoc` | Créé
+| `.agents/SESSIONS_HISTORY.adoc` | Mise à jour
+| `.agents/INDEX.adoc` | Mise à jour (session en cours → 004)
+|===
+
+== Résultat
+
+api-key-pool-gradle est désormais Liberty 🗽, 25ème borough du workspace, N0 (pool de clés API LLM avec rotation).
