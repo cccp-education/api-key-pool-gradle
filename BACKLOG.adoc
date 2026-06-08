@@ -1,0 +1,49 @@
+= Backlog — Liberty (api-key-pool-gradle)
+:description: Backlog de publication Maven Central — EPIC PUB
+:date: 2026-06-08
+:toc: left
+:sectnums:
+
+_Source : configuration/EPIC_PUB.adoc (Session 096)_
+
+'''
+== EPIC PUB — Publication Maven Central
+
+Pool de cles API LLM avec rotation (N0). VAGUE 2.
+
+=== PUB-3.07 — api-key-pool
+**Priorite** : P0
+**Estimation** : 1 pt
+**Dependances** : PUB-0 et PUB-1 complets (DNS TXT + GPG)
+
+. `cd foundry/public/api-key-pool-gradle && ./gradlew publish closeAndRelease`
+. Artefact : `education.cccp:api-key-pool`
+. Verifier sur https://central.sonatype.com/artifact/education.cccp/api-key-pool
+
+=== PUB-2.2 — Mise a jour commentaire relocation dans build.gradle.kts
+**Priorite** : P1
+**Estimation** : 1 pt
+**Dependances** : Aucune
+
+Dans le `build.gradle.kts` d'api-key-pool, remplacer le commentaire :
+
+```kotlin
+// RELOCATION : prepare la migration du groupId education.cccp →
+// <futur-domaine>. Activer avec -Prem relocationGroup="io.github.cccp-education"
+```
+
+Par :
+
+```kotlin
+// RELOCATION : garde comme echappatoire future.
+// Activable avec -Prem relocationGroup="<futur-namespace>"
+```
+
+'''
+== EPIC PUB-5 — Verification
+
+=== PUB-5.1 — Verifier Maven Central
+
+| Artefact | URL |
+|---|---|
+| api-key-pool | https://central.sonatype.com/artifact/education.cccp/api-key-pool |
