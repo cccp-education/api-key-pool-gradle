@@ -1,0 +1,16 @@
+= Session 004 — Publication Maven Central 0.0.1
+:sessions: 004
+:date: 2026-06-11
+:type: ops
+:score: 10/10
+
+== Summary
+Publication api-key-pool sur Maven Central via nmcp :
+- Version 0.0.1 déjà dans catalogue → hardcodée dans build.gradle.kts
+- Ajout nmcp settings plugin 1.5.0 + creds depuis ~/.gradle/gradle.properties
+- Repo mavenCentral() (plus l'ancien staging Sonatype)
+- Build OK, publishAggregationToCentralPortal → SUCCESS
+- 66/66 tests (non exécutés en session, préexistants)
+
+== Score
+10/10 — publication immédiate, zéro problème.

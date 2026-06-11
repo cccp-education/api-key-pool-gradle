@@ -6,8 +6,8 @@ _Projet_ : api-key-pool — N0 shared library (rotation clés API LLM, quota tra
 _Ontologie spatiale_ : voir `configuration/.agents/AGENT_GOVERNANCE.adoc`
 
 _Création gouvernance_ : 2026-05-12 (Session 000 — Bootstrap)
-_Session terminee_ : 002 — Architecture Racine Consommateur + Plugin Independant + Renommage + git init
-_Session en cours_ : 004 — (a definir)
+_Session terminee_ : 003 — Borough-isation Liberty 🗽
+_Session en cours_ : 005 — (a definir)
 
 '''
 == RÈGLES ABSOLUES (résumé)
@@ -66,7 +66,7 @@ Total : ~295 lignes Kotlin, compilable ✅, publishToMavenLocal ✅
 | APK-1 | Tests intégration multi-provider (Ollama, OpenAI, DeepSeek) | À FAIRE | P1
 | APK-2 | Support quotas réels — RateLimit headers parsing (HTTP 429) | À FAIRE | P2
 | APK-3 | Stratégies de rotation avancées (round-robin pondéré, least-used) | À FAIRE | P2
-| APK-4 | Publication Maven Central | À FAIRE | P3
+| APK-4 | Publication Maven Central | ✅ TERMINÉ (session 004) | P0
 |===
 
 '''
@@ -74,6 +74,7 @@ Total : ~295 lignes Kotlin, compilable ✅, publishToMavenLocal ✅
 
 |===
 | # | Date | Type | Sujet | Score
+| 004 | 2026-06-11 | ops | Publication Maven Central 0.0.1 — nmcp + version hardcodée + mavenCentral() | 10/10
 | 003 | 2026-06-02 | governance | Borough-isation — api-key-pool-gradle devient Liberty 🗽, 25ème borough | 10/10
 | 002 | 2026-05-27 | feat | Architecture Racine Consommateur + Plugin Indépendant (article 0124) | 10/10
 | 001 | 2026-05-18 | migration | CCCP — package rename models.kt + fix imports (6 main + 5 test) | 10/10
