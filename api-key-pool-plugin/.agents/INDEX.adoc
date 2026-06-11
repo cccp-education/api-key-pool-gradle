@@ -6,8 +6,8 @@ _Projet_ : api-key-pool — N0 shared library (rotation clés API LLM, quota tra
 _Ontologie spatiale_ : voir `configuration/.agents/AGENT_GOVERNANCE.adoc`
 
 _Création gouvernance_ : 2026-05-12 (Session 000 — Bootstrap)
-_Session terminee_ : 003 — Borough-isation Liberty 🗽
-_Session en cours_ : 005 — (a definir)
+_Session terminee_ : 006 — Vérification publication Maven Central 0.0.1
+_Session en cours_ : 007 — (a definir)
 
 '''
 == RÈGLES ABSOLUES (résumé)
@@ -74,6 +74,7 @@ Total : ~295 lignes Kotlin, compilable ✅, publishToMavenLocal ✅
 
 |===
 | # | Date | Type | Sujet | Score
+| 006 | 2026-06-11 | ops | Vérification publication Maven Central 0.0.1 — confirmée active, aucun changement | 8/10
 | 004 | 2026-06-11 | ops | Publication Maven Central 0.0.1 — nmcp + version hardcodée + mavenCentral() | 10/10
 | 003 | 2026-06-02 | governance | Borough-isation — api-key-pool-gradle devient Liberty 🗽, 25ème borough | 10/10
 | 002 | 2026-05-27 | feat | Architecture Racine Consommateur + Plugin Indépendant (article 0124) | 10/10

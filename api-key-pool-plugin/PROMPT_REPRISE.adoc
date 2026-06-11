@@ -1,14 +1,14 @@
-= PROMPT_REPRISE — Api Key Pool — Session 005
-:session: 005
-:sessions_precedente: 004 — Publication Maven Central 0.0.1
+= PROMPT_REPRISE — Api Key Pool — Session 006
+:session: 006
+:session_precedente: 005 — Vérification publication Maven Central 0.0.1
 
 == Contexte Hérité
 
 - api-key-pool:0.0.1 publié sur Maven Central (education.cccp:api-key-pool)
-- Nmcp configuré, version hardcodée, mavenCentral()
+- Publication confirmée active et fonctionnelle
 - 66/66 tests PASS, build OK
 
-== Prochaine Session (005)
+== Prochaine Session (007)
 
 - APK-1 : Tests intégration multi-provider (Ollama, OpenAI, DeepSeek)
 - APK-2 : Support quotas réels — RateLimit headers parsing

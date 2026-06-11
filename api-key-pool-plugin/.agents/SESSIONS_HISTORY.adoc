@@ -2,6 +2,7 @@
 
 |===
 | # | Date | Type | Sujet | Score
+| 006 | 2026-06-11 | ops | Vérification publication Maven Central 0.0.1 — confirmée active, aucun changement. 66/66 PASS inchangé. | 8/10
 | 004 | 2026-06-11 | ops | Publication Maven Central 0.0.1 — nmcp + version hardcodée + mavenCentral(). 66/66 tests préexistants. | 10/10
 | 003 | 2026-06-02 | governance | Borough-isation — api-key-pool-gradle devient Liberty 🗽, 25ème borough | 10/10
 | 002 | 2026-05-27 | feat | Architecture Racine Consommateur + Plugin Indépendant (article 0124) | 10/10

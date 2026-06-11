@@ -2,6 +2,7 @@
 
 |===
 | Date | Session | EPIC/US | Description
+| 2026-06-11 | 004 | APK-4 | Publication Maven Central. Version hardcodée 0.0.1. Nmcp 1.5.0 + mavenCentral(). Build OK, publishAggregationToCentralPortal SUCCESS. 66/66 tests préexistants.
 | 2026-05-12 | 000 | APK-0 | Bootstrap gouvernance agent api-key-pool. Création opencode.json, AGENT.adoc, PROMPT_REPRISE.adoc, .agents/INDEX.adoc, SESSION_CHECKLIST.adoc, SESSIONS_HISTORY.adoc, TEST_COVERAGE_ANALYSIS.adoc, COMPLETED_TASKS_ARCHIVE_2026-05.adoc.
 |===
 

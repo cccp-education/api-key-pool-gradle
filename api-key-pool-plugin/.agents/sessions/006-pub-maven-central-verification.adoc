@@ -1,0 +1,19 @@
+= Session 006 — Vérification publication Maven Central
+:session: 006
+:date: 2026-06-11
+:type: ops
+
+== Objectif
+
+Vérifier que la publication Maven Central 0.0.1 (session 004) est toujours active et fonctionnelle.
+
+== Résultat
+
+- Publication api-key-pool:0.0.1 confirmée active sur Maven Central
+- Aucun changement de code
+- Aucune modification fonctionnelle
+- 66/66 tests PASS (inchangé)
+
+== Score
+
+8/10 — vérification OK, pas de régression

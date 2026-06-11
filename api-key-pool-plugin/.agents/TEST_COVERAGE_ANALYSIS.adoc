@@ -16,6 +16,10 @@ _Statut_ : 66/66 PASS ✅ (pré-gouvernance, session 001 + 002-cleanup)
 
 Total : 66/66 PASS ✅
 
+== Session 006 — Couverture inchangée
+
+Pas de modification de code source. 66/66 PASS inchangé.
+
 == Prochaine étape
 
-Session 001 — APK-1 : Tests intégration multi-provider (Ollama, OpenAI, DeepSeek).
+Session 007 — APK-1 : Tests intégration multi-provider (Ollama, OpenAI, DeepSeek).

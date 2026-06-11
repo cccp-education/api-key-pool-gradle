@@ -1,0 +1,6 @@
+= Completed Tasks Archive — Juin 2026
+
+|===
+| Date | Session | EPIC/US | Description
+| 2026-06-11 | 006 | APK-4 | Vérification publication Maven Central 0.0.1 — confirmée active et fonctionnelle. Aucun changement de code.
+|===
