@@ -1,0 +1,43 @@
+= Session 007 — Liquidation N0 (APK-1 + APK-2 + PUB-2.2)
+:session: 007
+:date: 2026-06-13
+:type: feat
+:score: 9/10
+
+== Objectif
+Terminer les EPICs restants de Liberty (api-key-pool) pour liquider le borough N0.
+
+== Réalisations
+
+=== PUB-2.2 — Commentaire RELOCATION
+- Màj du commentaire RELOCATION dans `build.gradle.kts` (lignes 67-70)
+- Ancien : "prépare la migration du groupId education.cccp → <futur-domaine>"
+- Nouveau : "gardé comme échappatoire future. Activable avec -Prem relocationGroup"
+
+=== APK-1 — Tests intégration multi-provider
+- Ajout de `DEEPSEEK` au `Provider` enum
+- Màj `ProviderEnumsTest` : 10→11 valeurs, nouveau test `should contain DEEPSEEK`
+- Nouveau fichier `MultiProviderIntegrationTest.kt` : 6 tests
+  - Rotation round-robin Ollama/OpenAI/DeepSeek
+  - Tracking usage per provider
+  - Least-used strategy cross-provider
+  - Quota exceeded per provider independently
+  - Audit logs record provider info
+  - Single provider pool still works
+
+=== APK-2 — RateLimitHeadersParser
+- Nouveau fichier `RateLimitHeadersParser.kt` + `RateLimitInfo` data class
+- Parsing headers standard : X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After
+- Parsing styles : OpenAI (x-ratelimit-*-requests), Anthropic (anthropic-ratelimit-*-requests), DeepSeek (x-ds-ratelimit-*)
+- Retry-After : support secondes + HTTP date (RFC 1123)
+- Reset : support epoch + ISO datetime + "Ns" duration
+- `isExhausted` + `usagePercent` computed properties
+- Nouveau fichier `RateLimitHeadersParserTest.kt` : 15 tests
+
+== Résultat
+- 95/95 tests PASS (66 existants + 6 APK-1 + 15 APK-2 + 8 ProviderEnums màj)
+- 2 nouveaux fichiers source, 2 nouveaux fichiers test
+- Build OK, publishToMavenLocal OK
+
+== Prochaine session
+008 — APK-3 (stratégies de rotation avancées) ou dormant.

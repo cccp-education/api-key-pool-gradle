@@ -10,6 +10,7 @@ enum class Provider {
     OPENAI,
     ANTHROPIC,
     GITHUB,
+    DEEPSEEK,
     UNKNOWN
 }
 

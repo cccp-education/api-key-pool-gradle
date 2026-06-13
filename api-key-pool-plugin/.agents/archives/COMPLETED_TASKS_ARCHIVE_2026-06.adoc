@@ -2,5 +2,8 @@
 
 |===
 | Date | Session | EPIC/US | Description
+| 2026-06-13 | 007 | APK-1 | DEEPSEEK ajouté au Provider enum + 6 tests multi-provider (Ollama/OpenAI/DeepSeek). MultiProviderIntegrationTest.kt.
+| 2026-06-13 | 007 | APK-2 | RateLimitHeadersParser + RateLimitInfo. Parsing X-RateLimit-*, Retry-After, styles OpenAI/Anthropic/DeepSeek. 15 tests.
+| 2026-06-13 | 007 | PUB-2.2 | Commentaire RELOCATION màj dans build.gradle.kts.
 | 2026-06-11 | 006 | APK-4 | Vérification publication Maven Central 0.0.1 — confirmée active et fonctionnelle. Aucun changement de code.
 |===
