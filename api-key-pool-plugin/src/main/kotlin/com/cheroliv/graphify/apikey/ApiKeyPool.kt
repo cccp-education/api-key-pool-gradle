@@ -29,7 +29,8 @@ class ApiKeyPool(
         val selectedEntry = when (rotationStrategy) {
             RotationStrategy.ROUND_ROBIN -> getNextRoundRobin()
             RotationStrategy.LEAST_USED -> getNextLeastUsed()
-            RotationStrategy.WEIGHTED, RotationStrategy.SMART -> getNextRoundRobin()
+            RotationStrategy.WEIGHTED -> getNextWeighted()
+            RotationStrategy.SMART -> getNextSmart()
         }
 
         tracker.trackUsage(selectedEntry.id)
@@ -56,6 +57,45 @@ class ApiKeyPool(
         return entries.minByOrNull { entry ->
             tracker.getUsage(entry.id)
         } ?: entries.first()
+    }
+
+    private fun getNextWeighted(): ApiKeyEntry {
+        val totalWeight = entries.sumOf { it.metadata["weight"]?.toDoubleOrNull() ?: 1.0 }
+        if (totalWeight <= 0.0) return entries.first()
+
+        val pointer = Math.random() * totalWeight
+        var cumulative = 0.0
+        for (entry in entries) {
+            cumulative += entry.metadata["weight"]?.toDoubleOrNull() ?: 1.0
+            if (pointer <= cumulative) return entry
+        }
+        return entries.last()
+    }
+
+    private fun getNextSmart(): ApiKeyEntry {
+        val available = entries.filter { !tracker.isQuotaExceeded(it) }
+        val candidates = available.ifEmpty { entries }
+
+        val maxRemaining = candidates.maxOfOrNull { entry ->
+            entry.quota.limitValue - tracker.getUsage(entry.id)
+        } ?: return candidates.first()
+
+        val topCandidates = candidates.filter { entry ->
+            entry.quota.limitValue - tracker.getUsage(entry.id) == maxRemaining
+        }
+
+        if (topCandidates.size == 1) return topCandidates.first()
+
+        val totalWeight = topCandidates.sumOf { it.metadata["weight"]?.toDoubleOrNull() ?: 1.0 }
+        if (totalWeight <= 0.0) return topCandidates.first()
+
+        val pointer = Math.random() * totalWeight
+        var cumulative = 0.0
+        for (entry in topCandidates) {
+            cumulative += entry.metadata["weight"]?.toDoubleOrNull() ?: 1.0
+            if (pointer <= cumulative) return entry
+        }
+        return topCandidates.last()
     }
 
     fun isQuotaExceeded(entry: ApiKeyEntry): Boolean {

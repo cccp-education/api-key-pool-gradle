@@ -6,8 +6,8 @@ _Projet_ : api-key-pool — N0 shared library (rotation clés API LLM, quota tra
 _Ontologie spatiale_ : voir `configuration/.agents/AGENT_GOVERNANCE.adoc`
 
 _Création gouvernance_ : 2026-05-12 (Session 000 — Bootstrap)
-_Session terminee_ : 007 — Liquidation N0 (APK-1 + APK-2 terminés)
-_Session en cours_ : 008 — (dormant, réactiver si besoin)
+_Session terminee_ : 007 — Liquidation N0 (APK-1 + APK-2 + APK-3 terminés, 104/104 PASS)
+_Session en cours_ : 008 — (dormant, maintenance)
 
 '''
 == RÈGLES ABSOLUES (résumé)
@@ -65,7 +65,7 @@ Total : ~295 lignes Kotlin, compilable ✅, publishToMavenLocal ✅
 | APK-0 | Bootstrap gouvernance agent | ✅ TERMINÉ (session 000) | P0
 | APK-1 | Tests intégration multi-provider (Ollama, OpenAI, DeepSeek) | ✅ TERMINÉ (session 007) | P1
 | APK-2 | Support quotas réels — RateLimit headers parsing (HTTP 429) | ✅ TERMINÉ (session 007) | P2
-| APK-3 | Stratégies de rotation avancées (round-robin pondéré, least-used) | À FAIRE | P2
+| APK-3 | Stratégies de rotation avancées (WEIGHTED pondéré, SMART quota-aware) | ✅ TERMINÉ (session 007) | P2
 | APK-4 | Publication Maven Central | ✅ TERMINÉ (session 004) | P0
 |===
 
@@ -74,7 +74,7 @@ Total : ~295 lignes Kotlin, compilable ✅, publishToMavenLocal ✅
 
 |===
 | # | Date | Type | Sujet | Score
-| 007 | 2026-06-13 | feat | Liquidation N0 — APK-1 (DEEPSEEK Provider + 6 tests multi-provider) + APK-2 (RateLimitHeadersParser + 15 tests) + PUB-2.2 (RELOCATION commentaire). 95/95 PASS. | 9/10
+| 007 | 2026-06-13 | feat | Liquidation N0 — APK-1 (DEEPSEEK + 6 tests multi-provider) + APK-2 (RateLimitHeadersParser + 15 tests) + APK-3 (WEIGHTED + SMART rotation + 10 tests) + PUB-2.2. 104/104 PASS. | 9/10
 | 006 | 2026-06-11 | ops | Vérification publication Maven Central 0.0.1 — confirmée active, aucun changement | 8/10
 | 004 | 2026-06-11 | ops | Publication Maven Central 0.0.1 — nmcp + version hardcodée + mavenCentral() | 10/10
 | 003 | 2026-06-02 | governance | Borough-isation — api-key-pool-gradle devient Liberty 🗽, 25ème borough | 10/10

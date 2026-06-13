@@ -1,18 +1,17 @@
 = PROMPT_REPRISE — Api Key Pool — Session 008
 :session: 008
-:session_precedente: 007 — Liquidation N0 (APK-1 + APK-2 + PUB-2.2)
+:session_precedente: 007 — Liquidation N0 (APK-1 + APK-2 + APK-3)
 
 == Contexte Hérité
 
 - api-key-pool:0.0.1 publié sur Maven Central (education.cccp:api-key-pool)
-- 95/95 tests PASS, build OK
-- APK-1 ✅ : DEEPSEEK ajouté au Provider enum + 6 tests multi-provider (Ollama/OpenAI/DeepSeek)
-- APK-2 ✅ : RateLimitHeadersParser (15 tests, parsing X-RateLimit-*, Retry-After, OpenAI/Anthropic/DeepSeek styles)
+- 104/104 tests PASS, build OK
+- APK-1 ✅ : DEEPSEEK + 6 tests multi-provider
+- APK-2 ✅ : RateLimitHeadersParser + 15 tests
+- APK-3 ✅ : WEIGHTED (pondéré par metadata["weight"]) + SMART (quota-aware, fallback weighted)
 - PUB-2.2 ✅ : commentaire RELOCATION màj
-- 2 nouveaux fichiers source : RateLimitHeadersParser.kt + RateLimitInfo data class
-- 2 nouveaux fichiers test : MultiProviderIntegrationTest.kt + RateLimitHeadersParserTest.kt
+- Tous les EPICs terminés — borough liquidé
 
 == Prochaine Session (008)
 
-- APK-3 : Stratégies de rotation avancées (round-robin pondéré, least-used)
-- Mode dormant — réactiver si besoin cross-borough
+- Dormant. Réactiver si besoin cross-borough.
