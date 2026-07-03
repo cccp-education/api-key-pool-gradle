@@ -1,10 +1,8 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-
 plugins {
-    signing
     `java-library`
     `maven-publish`
     alias(libs.plugins.kotlin.jvm)
+    id("education.cccp.build.publishing") version "0.0.1"
 }
 
 group = "education.cccp"
@@ -45,50 +43,10 @@ publishing {
             pom {
                 name.set("ApiKeyPool")
                 description.set("N0 shared library — LLM API key pool with rotation, quota tracking, and audit logging.")
-                url.set("https://github.com/cheroliv/graphify-gradle")
-                licenses {
-                    license {
-                        name.set("The Apache License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("cccp-education")
-                        name.set("CCCP Education")
-                        email.set("cccp.edu@gmail.com")
-                    }
-                }
-                scm {
-                    connection.set("https://github.com/cheroliv/api-key-pool.git")
-                    developerConnection.set("https://github.com/cheroliv/api-key-pool.git")
-                    url.set("https://github.com/cheroliv/api-key-pool")
-                }
-                // RELOCATION : gardé comme échappatoire future.
-                // Activable avec -Prem relocationGroup="<futur-namespace>"
-                project.findProperty("relocationGroup")?.let { targetGroup ->
-                    withXml {
-                        val pom = asElement()
-                        val doc = pom.ownerDocument
-                        val distMgmt = doc.createElement("distributionManagement")
-                        val relocation = doc.createElement("relocation")
-                        relocation.appendChild(doc.createElement("groupId")).also { it.textContent = targetGroup.toString() }
-                        relocation.appendChild(doc.createElement("artifactId")).also { it.textContent = project.name }
-                        distMgmt.appendChild(relocation)
-                        pom.appendChild(distMgmt)
-                    }
-                }
             }
         }
     }
     repositories {
         mavenCentral()
     }
-}
-
-signing {
-    if (System.getenv("CI") != "true" && !version.toString().endsWith("-SNAPSHOT")) {
-        sign(publishing.publications)
-    }
-    useGpgCmd()
 }

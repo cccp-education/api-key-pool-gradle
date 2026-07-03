@@ -6,8 +6,9 @@ _Projet_ : api-key-pool — N0 shared library (rotation clés API LLM, quota tra
 _Ontologie spatiale_ : voir `configuration/.agents/AGENT_GOVERNANCE.adoc`
 
 _Création gouvernance_ : 2026-05-12 (Session 000 — Bootstrap)
-_Session terminee_ : 007 — Liquidation N0 (APK-1 + APK-2 + APK-3 terminés, 104/104 PASS)
-_Session en cours_ : 008 — (dormant, maintenance)
+_Derniere mise a jour_ : 2026-07-03
+_Session terminee_ : 008 — CNV-6 Migration — convention plugins education.cccp.build.* v0.0.1 appliquées, -47 lignes, compileKotlin SUCCESS ✅ TERMINE
+_Session en cours_ : 009 — (dormant, maintenance)
 
 '''
 == RÈGLES ABSOLUES (résumé)
@@ -74,6 +75,7 @@ Total : ~295 lignes Kotlin, compilable ✅, publishToMavenLocal ✅
 
 |===
 | # | Date | Type | Sujet | Score
+| 008 | 2026-07-03 | dev | CNV-6 Migration — convention plugins education.cccp.build.* v0.0.1 appliquées, -47 lignes, compileKotlin SUCCESS | ✅ TERMINE
 | 007 | 2026-06-13 | feat | Liquidation N0 — APK-1 (DEEPSEEK + 6 tests multi-provider) + APK-2 (RateLimitHeadersParser + 15 tests) + APK-3 (WEIGHTED + SMART rotation + 10 tests) + PUB-2.2. 104/104 PASS. | 9/10
 | 006 | 2026-06-11 | ops | Vérification publication Maven Central 0.0.1 — confirmée active, aucun changement | 8/10
 | 004 | 2026-06-11 | ops | Publication Maven Central 0.0.1 — nmcp + version hardcodée + mavenCentral() | 10/10

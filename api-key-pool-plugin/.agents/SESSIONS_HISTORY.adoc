@@ -2,6 +2,7 @@
 
 |===
 | # | Date | Type | Sujet | Score
+| 008 | 2026-07-03 | dev | CNV-6 Migration — convention plugins education.cccp.build.* v0.0.1 appliquées (publishing seulement, library pure N0 — pas gradle-plugin), build.gradle.kts 94→47 lignes (-47), compileKotlin SUCCESS, BUILD SUCCESS. | 9/10
 | 007 | 2026-06-13 | feat | Liquidation N0 — APK-1 (DEEPSEEK + 6 tests multi-provider) + APK-2 (RateLimitHeadersParser + 15 tests) + APK-3 (WEIGHTED + SMART rotation + 10 tests) + PUB-2.2. 104/104 PASS. | 9/10
 | 006 | 2026-06-11 | ops | Vérification publication Maven Central 0.0.1 — confirmée active, aucun changement. 66/66 PASS inchangé. | 8/10
 | 004 | 2026-06-11 | ops | Publication Maven Central 0.0.1 — nmcp + version hardcodée + mavenCentral(). 66/66 tests préexistants. | 10/10
