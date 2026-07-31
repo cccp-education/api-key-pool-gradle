@@ -142,6 +142,18 @@ cd api-key-pool-plugin && ./gradlew publishToMavenLocal
 cd .. && ./gradlew build
 ----
 
+=== Conventions Plugins (ABIDJAN N0)
+
+ApiKeyPool consomme le convention plugin centralise `education.cccp.build` v0.0.3 (library pure, publishing seul) :
+
+[cols="2,5"]
+|===
+| Plugin ID | Role
+| `education.cccp.build.publishing` | POM Maven Central + signing conditionnel + relocation + publicationType
+|===
+
+Ce plugin remplace ~47 lignes de build redondantes (POM, signing).
+
 === Composants Clés
 
 * **ApiKeyPool** : Cœur — rotation de clés, sélection par quota disponible
