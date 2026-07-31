@@ -7,7 +7,7 @@ plugins {
 
 group = "education.cccp"
 version = "0.0.1"
-kotlin.jvmToolchain(JavaVersion.VERSION_24.ordinal)
+kotlin.jvmToolchain(JavaVersion.VERSION_25.ordinal)
 
 repositories {
     mavenCentral()
@@ -29,6 +29,10 @@ tasks.withType<Test> {
         events("passed", "skipped", "failed")
         showStandardStreams = true
     }
+}
+
+publishingConventions {
+    publicationType = "LIBRARY"
 }
 
 java {
