@@ -1,6 +1,6 @@
 [versions]
 api-key-pool = "0.0.1"
-kotlin = "2.2.20"
+kotlin = "2.4.10"
 junit = "5.10.1"
 
 [plugins]

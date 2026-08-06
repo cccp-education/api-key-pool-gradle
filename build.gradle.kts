@@ -5,7 +5,7 @@ plugins {
 
 group = "education.cccp"
 version = libs.versions.api.key.pool.get()
-kotlin.jvmToolchain(JavaVersion.VERSION_24.ordinal)
+kotlin.jvmToolchain(JavaVersion.VERSION_25.ordinal)
 
 repositories {
     mavenLocal()
