@@ -2,7 +2,7 @@ plugins {
     `java-library`
     `maven-publish`
     alias(libs.plugins.kotlin.jvm)
-    id("education.cccp.build.publishing") version "0.0.2"
+    id("education.cccp.build.publishing") version "0.0.4"
 }
 
 group = "education.cccp"
