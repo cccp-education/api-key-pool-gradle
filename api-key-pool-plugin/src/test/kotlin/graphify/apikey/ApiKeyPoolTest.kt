@@ -234,4 +234,39 @@ class ApiKeyPoolTest {
         assertTrue(logs.any { it.eventType == AuditEventType.QUOTA_EXCEEDED })
         assertTrue(logs.any { it.eventType == AuditEventType.AUTO_RESET })
     }
+
+    /**
+     * CHE-I18N-22 US-8 — the pool is shared by several translation workers.
+     * The round-robin cursor was a plain `Int`, so concurrent `getNextKey`
+     * calls could observe the same index and hand the same Ollama port to two
+     * workers (double load on one instance while others idle). A batch of N
+     * sequential draws must still visit each of the N ports exactly once.
+     */
+    @Test
+    fun `concurrent getNextKey never returns duplicate port before a full cycle`() {
+        val entries = (1..10).map { createTestEntry("key$it") }
+        val pool = ApiKeyPool(entries)
+
+        val draws =
+            java.util.concurrent.ConcurrentHashMap<String, Int>()
+        val threads = 10
+        val barrier = java.util.concurrent.CyclicBarrier(threads)
+        val workers =
+            (0 until threads).map {
+                Thread {
+                    barrier.await()
+                    val key = pool.getNextKey()
+                    draws.merge(key.id, 1, Int::plus)
+                }
+            }
+        workers.forEach { it.start() }
+        workers.forEach { it.join() }
+
+        assertEquals(threads, draws.values.sum(), "Every draw must be counted")
+        assertEquals(
+            threads,
+            draws.size,
+            "A full cycle of $threads concurrent draws must hit $threads distinct ports, got ${draws.keys}",
+        )
+    }
 }

@@ -2,7 +2,15 @@ package com.cheroliv.graphify.apikey
 
 import graphify.apikey.ApiKeyEntry
 import graphify.apikey.AuditLogEntry
+import java.util.concurrent.atomic.AtomicInteger
 
+/**
+ * CHE-I18N-22 US-8 — the pool is shared across concurrent translation workers
+ * (bakery drives up to one worker per healthy Ollama port). The round-robin
+ * cursor is an [AtomicInteger] so a concurrent `getNextKey` can never observe a
+ * stale index and hand the same port to two workers — which would pile load on
+ * one instance while the rest of the pool idles.
+ */
 class ApiKeyPool(
     private val entries: List<ApiKeyEntry>,
     private val rotationStrategy: RotationStrategy = RotationStrategy.ROUND_ROBIN,
@@ -10,7 +18,7 @@ class ApiKeyPool(
     autoResetEnabled: Boolean = true,
     auditEnabled: Boolean = true
 ) {
-    private var currentIndex = 0
+    private val currentIndex = AtomicInteger(0)
     private val tracker: QuotaTracker = QuotaTracker()
     private val resetManager: QuotaResetManager = QuotaResetManager(tracker, autoResetEnabled)
     private val auditLogger: QuotaAuditLogger = QuotaAuditLogger(auditEnabled)
@@ -48,9 +56,8 @@ class ApiKeyPool(
     }
 
     private fun getNextRoundRobin(): ApiKeyEntry {
-        val entry = entries[currentIndex % entries.size]
-        currentIndex = (currentIndex + 1) % entries.size
-        return entry
+        val index = currentIndex.getAndUpdate { (it + 1) % entries.size }
+        return entries[index % entries.size]
     }
 
     private fun getNextLeastUsed(): ApiKeyEntry {
