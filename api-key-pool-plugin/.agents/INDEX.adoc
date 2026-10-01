@@ -114,3 +114,4 @@ ont eu lieu dans le cadre de la gouvernance graphify-plugin.
 | `.agents/sessions/` | Archives par session | LAZY
 | `.agents/encyclopedies/` | Connaissance froide | COLD
 |===
+

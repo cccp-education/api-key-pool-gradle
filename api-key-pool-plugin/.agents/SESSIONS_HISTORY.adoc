@@ -14,3 +14,4 @@
 
 _Pré-gouvernance_ : L'extraction depuis plantuml-gradle et la conversion Pattern A
 (sessions 001, 002-cleanup) sont documentées dans la gouvernance graphify-plugin.
+
