@@ -7,14 +7,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class AdvancedRotationStrategyTest {
-
     private fun createEntry(
         id: String,
         provider: Provider = Provider.OLLAMA,
         weight: Double = 1.0,
-        quota: QuotaConfig = QuotaConfig()
-    ): ApiKeyEntry {
-        return ApiKeyEntry(
+        quota: QuotaConfig = QuotaConfig(),
+    ): ApiKeyEntry =
+        ApiKeyEntry(
             id = id,
             email = "$id@test.com",
             name = "Key $id",
@@ -22,16 +21,16 @@ class AdvancedRotationStrategyTest {
             provider = provider,
             services = listOf(ServiceType.CHAT_COMPLETION),
             quota = quota,
-            metadata = mapOf("weight" to weight.toString())
+            metadata = mapOf("weight" to weight.toString()),
         )
-    }
 
     @Test
     fun `WEIGHTED strategy should favor higher weight keys`() {
-        val entries = listOf(
-            createEntry("heavy", weight = 3.0),
-            createEntry("light", weight = 1.0)
-        )
+        val entries =
+            listOf(
+                createEntry("heavy", weight = 3.0),
+                createEntry("light", weight = 1.0),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.WEIGHTED)
 
         val counts = mutableMapOf<String, Int>()
@@ -49,11 +48,12 @@ class AdvancedRotationStrategyTest {
 
     @Test
     fun `WEIGHTED strategy with equal weights should distribute evenly`() {
-        val entries = listOf(
-            createEntry("a", weight = 1.0),
-            createEntry("b", weight = 1.0),
-            createEntry("c", weight = 1.0)
-        )
+        val entries =
+            listOf(
+                createEntry("a", weight = 1.0),
+                createEntry("b", weight = 1.0),
+                createEntry("c", weight = 1.0),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.WEIGHTED)
 
         val counts = mutableMapOf<String, Int>()
@@ -73,17 +73,18 @@ class AdvancedRotationStrategyTest {
 
     @Test
     fun `WEIGHTED strategy should default weight to 1 when metadata missing`() {
-        val entries = listOf(
-            ApiKeyEntry(
-                id = "no-meta",
-                email = "no@test.com",
-                name = "No Meta",
-                keyRef = "KEY_NM",
-                provider = Provider.OLLAMA,
-                services = listOf(ServiceType.CHAT_COMPLETION)
-            ),
-            createEntry("with-meta", weight = 2.0)
-        )
+        val entries =
+            listOf(
+                ApiKeyEntry(
+                    id = "no-meta",
+                    email = "no@test.com",
+                    name = "No Meta",
+                    keyRef = "KEY_NM",
+                    provider = Provider.OLLAMA,
+                    services = listOf(ServiceType.CHAT_COMPLETION),
+                ),
+                createEntry("with-meta", weight = 2.0),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.WEIGHTED)
 
         val counts = mutableMapOf<String, Int>()
@@ -103,10 +104,11 @@ class AdvancedRotationStrategyTest {
         val lowQuota = QuotaConfig(limitValue = 10, thresholdPercent = 100)
         val highQuota = QuotaConfig(limitValue = 1000, thresholdPercent = 100)
 
-        val entries = listOf(
-            createEntry("low", quota = lowQuota),
-            createEntry("high", quota = highQuota)
-        )
+        val entries =
+            listOf(
+                createEntry("low", quota = lowQuota),
+                createEntry("high", quota = highQuota),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.SMART, autoResetEnabled = false)
 
         val counts = mutableMapOf<String, Int>()
@@ -125,10 +127,11 @@ class AdvancedRotationStrategyTest {
     fun `SMART strategy should fall back to weighted when quotas equal`() {
         val quota = QuotaConfig(limitValue = 1000, thresholdPercent = 100)
 
-        val entries = listOf(
-            createEntry("heavy", weight = 3.0, quota = quota),
-            createEntry("light", weight = 1.0, quota = quota)
-        )
+        val entries =
+            listOf(
+                createEntry("heavy", weight = 3.0, quota = quota),
+                createEntry("light", weight = 1.0, quota = quota),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.SMART, autoResetEnabled = false)
 
         val counts = mutableMapOf<String, Int>()
@@ -149,10 +152,11 @@ class AdvancedRotationStrategyTest {
         val tinyQuota = QuotaConfig(limitValue = 3, thresholdPercent = 100)
         val normalQuota = QuotaConfig(limitValue = 100, thresholdPercent = 100)
 
-        val entries = listOf(
-            createEntry("tiny", quota = tinyQuota),
-            createEntry("normal", quota = normalQuota)
-        )
+        val entries =
+            listOf(
+                createEntry("tiny", quota = tinyQuota),
+                createEntry("normal", quota = normalQuota),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.SMART, autoResetEnabled = false)
 
         repeat(3) { pool.getNextKey() }
@@ -173,11 +177,12 @@ class AdvancedRotationStrategyTest {
         val openaiQuota = QuotaConfig(limitValue = 200, thresholdPercent = 100)
         val deepseekQuota = QuotaConfig(limitValue = 100, thresholdPercent = 100)
 
-        val entries = listOf(
-            createEntry("ollama", Provider.OLLAMA, weight = 1.0, quota = ollamaQuota),
-            createEntry("openai", Provider.OPENAI, weight = 2.0, quota = openaiQuota),
-            createEntry("deepseek", Provider.DEEPSEEK, weight = 1.0, quota = deepseekQuota)
-        )
+        val entries =
+            listOf(
+                createEntry("ollama", Provider.OLLAMA, weight = 1.0, quota = ollamaQuota),
+                createEntry("openai", Provider.OPENAI, weight = 2.0, quota = openaiQuota),
+                createEntry("deepseek", Provider.DEEPSEEK, weight = 1.0, quota = deepseekQuota),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.SMART, autoResetEnabled = false)
 
         val counts = mutableMapOf<String, Int>()
@@ -196,10 +201,11 @@ class AdvancedRotationStrategyTest {
 
     @Test
     fun `WEIGHTED strategy should track usage correctly`() {
-        val entries = listOf(
-            createEntry("a", weight = 2.0),
-            createEntry("b", weight = 1.0)
-        )
+        val entries =
+            listOf(
+                createEntry("a", weight = 2.0),
+                createEntry("b", weight = 1.0),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.WEIGHTED)
 
         repeat(5) { pool.getNextKey() }
@@ -210,10 +216,11 @@ class AdvancedRotationStrategyTest {
 
     @Test
     fun `SMART strategy should track usage correctly`() {
-        val entries = listOf(
-            createEntry("a", quota = QuotaConfig(limitValue = 100)),
-            createEntry("b", quota = QuotaConfig(limitValue = 100))
-        )
+        val entries =
+            listOf(
+                createEntry("a", quota = QuotaConfig(limitValue = 100)),
+                createEntry("b", quota = QuotaConfig(limitValue = 100)),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.SMART, autoResetEnabled = false)
 
         repeat(5) { pool.getNextKey() }

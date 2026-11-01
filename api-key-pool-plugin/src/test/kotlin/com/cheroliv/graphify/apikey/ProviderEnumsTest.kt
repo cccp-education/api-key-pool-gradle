@@ -5,7 +5,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class ProviderEnumsTest {
-
     @Test
     fun `Provider enum should have 11 values`() {
         val providers = Provider.entries

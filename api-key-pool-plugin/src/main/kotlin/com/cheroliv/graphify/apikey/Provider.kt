@@ -11,7 +11,7 @@ enum class Provider {
     ANTHROPIC,
     GITHUB,
     DEEPSEEK,
-    UNKNOWN
+    UNKNOWN,
 }
 
 enum class ServiceType {
@@ -24,12 +24,12 @@ enum class ServiceType {
     TRANSLATION,
     CHAT_COMPLETION,
     VISION,
-    CUSTOM
+    CUSTOM,
 }
 
 enum class RotationStrategy {
     ROUND_ROBIN,
     WEIGHTED,
     LEAST_USED,
-    SMART
+    SMART,
 }

@@ -4,13 +4,16 @@ import graphify.apikey.ApiKeyEntry
 import graphify.apikey.QuotaConfig
 import graphify.apikey.QuotaType
 import graphify.apikey.ResetPolicy
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDateTime
 
 class QuotaResetManagerTest {
-
     private lateinit var tracker: QuotaTracker
     private lateinit var resetManager: QuotaResetManager
     private lateinit var apiKeyEntry: ApiKeyEntry
@@ -18,20 +21,22 @@ class QuotaResetManagerTest {
     @BeforeEach
     fun setUp() {
         tracker = QuotaTracker()
-        apiKeyEntry = ApiKeyEntry(
-            id = "test-key-1",
-            email = "test@example.com",
-            name = "Test Key",
-            keyRef = "TEST_API_KEY_1",
-            provider = Provider.GOOGLE,
-            services = listOf(ServiceType.TEXT_GENERATION),
-            quota = QuotaConfig(
-                limitType = QuotaType.REQUESTS,
-                limitValue = 100,
-                thresholdPercent = 80,
-                resetPolicy = ResetPolicy.DAILY
+        apiKeyEntry =
+            ApiKeyEntry(
+                id = "test-key-1",
+                email = "test@example.com",
+                name = "Test Key",
+                keyRef = "TEST_API_KEY_1",
+                provider = Provider.GOOGLE,
+                services = listOf(ServiceType.TEXT_GENERATION),
+                quota =
+                    QuotaConfig(
+                        limitType = QuotaType.REQUESTS,
+                        limitValue = 100,
+                        thresholdPercent = 80,
+                        resetPolicy = ResetPolicy.DAILY,
+                    ),
             )
-        )
     }
 
     @Test
@@ -113,9 +118,10 @@ class QuotaResetManagerTest {
 
     @Test
     fun `test checkAndReset with MANUAL policy does not auto reset`() {
-        val manualEntry = apiKeyEntry.copy(
-            quota = apiKeyEntry.quota.copy(resetPolicy = ResetPolicy.MANUAL)
-        )
+        val manualEntry =
+            apiKeyEntry.copy(
+                quota = apiKeyEntry.quota.copy(resetPolicy = ResetPolicy.MANUAL),
+            )
         resetManager = QuotaResetManager(tracker)
         repeat(80) { tracker.trackUsage(manualEntry.id) }
         assertFalse(resetManager.checkAndReset(manualEntry))
@@ -123,9 +129,10 @@ class QuotaResetManagerTest {
 
     @Test
     fun `test checkAndReset with NEVER policy does not auto reset`() {
-        val neverEntry = apiKeyEntry.copy(
-            quota = apiKeyEntry.quota.copy(resetPolicy = ResetPolicy.NEVER)
-        )
+        val neverEntry =
+            apiKeyEntry.copy(
+                quota = apiKeyEntry.quota.copy(resetPolicy = ResetPolicy.NEVER),
+            )
         resetManager = QuotaResetManager(tracker)
         repeat(80) { tracker.trackUsage(neverEntry.id) }
         assertFalse(resetManager.checkAndReset(neverEntry))

@@ -7,30 +7,29 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class MultiProviderIntegrationTest {
-
     private fun createEntry(
         id: String,
         provider: Provider,
-        quota: QuotaConfig = QuotaConfig()
-    ): ApiKeyEntry {
-        return ApiKeyEntry(
+        quota: QuotaConfig = QuotaConfig(),
+    ): ApiKeyEntry =
+        ApiKeyEntry(
             id = id,
             email = "$id@test.com",
             name = "Key $id",
             keyRef = "${provider.name}_KEY_$id",
             provider = provider,
             services = listOf(ServiceType.CHAT_COMPLETION),
-            quota = quota
+            quota = quota,
         )
-    }
 
     @Test
     fun `pool with Ollama OpenAI and DeepSeek should rotate across providers`() {
-        val entries = listOf(
-            createEntry("ollama-1", Provider.OLLAMA),
-            createEntry("openai-1", Provider.OPENAI),
-            createEntry("deepseek-1", Provider.DEEPSEEK)
-        )
+        val entries =
+            listOf(
+                createEntry("ollama-1", Provider.OLLAMA),
+                createEntry("openai-1", Provider.OPENAI),
+                createEntry("deepseek-1", Provider.DEEPSEEK),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.ROUND_ROBIN)
 
         val first = pool.getNextKey()
@@ -46,11 +45,12 @@ class MultiProviderIntegrationTest {
 
     @Test
     fun `pool with mixed providers should track usage per provider`() {
-        val entries = listOf(
-            createEntry("ollama-1", Provider.OLLAMA),
-            createEntry("openai-1", Provider.OPENAI),
-            createEntry("deepseek-1", Provider.DEEPSEEK)
-        )
+        val entries =
+            listOf(
+                createEntry("ollama-1", Provider.OLLAMA),
+                createEntry("openai-1", Provider.OPENAI),
+                createEntry("deepseek-1", Provider.DEEPSEEK),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.ROUND_ROBIN)
 
         repeat(6) { pool.getNextKey() }
@@ -62,11 +62,12 @@ class MultiProviderIntegrationTest {
 
     @Test
     fun `least used strategy should work across providers`() {
-        val entries = listOf(
-            createEntry("ollama-1", Provider.OLLAMA),
-            createEntry("openai-1", Provider.OPENAI),
-            createEntry("deepseek-1", Provider.DEEPSEEK)
-        )
+        val entries =
+            listOf(
+                createEntry("ollama-1", Provider.OLLAMA),
+                createEntry("openai-1", Provider.OPENAI),
+                createEntry("deepseek-1", Provider.DEEPSEEK),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.LEAST_USED)
 
         pool.getNextKey()
@@ -83,11 +84,12 @@ class MultiProviderIntegrationTest {
         val lowQuota = QuotaConfig(limitValue = 10, thresholdPercent = 80)
         val highQuota = QuotaConfig(limitValue = 1000, thresholdPercent = 80)
 
-        val entries = listOf(
-            createEntry("ollama-1", Provider.OLLAMA, lowQuota),
-            createEntry("openai-1", Provider.OPENAI, highQuota),
-            createEntry("deepseek-1", Provider.DEEPSEEK, highQuota)
-        )
+        val entries =
+            listOf(
+                createEntry("ollama-1", Provider.OLLAMA, lowQuota),
+                createEntry("openai-1", Provider.OPENAI, highQuota),
+                createEntry("deepseek-1", Provider.DEEPSEEK, highQuota),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.ROUND_ROBIN, autoResetEnabled = false)
 
         repeat(24) { pool.getNextKey() }
@@ -100,11 +102,12 @@ class MultiProviderIntegrationTest {
 
     @Test
     fun `audit logs should record provider info`() {
-        val entries = listOf(
-            createEntry("ollama-1", Provider.OLLAMA),
-            createEntry("openai-1", Provider.OPENAI),
-            createEntry("deepseek-1", Provider.DEEPSEEK)
-        )
+        val entries =
+            listOf(
+                createEntry("ollama-1", Provider.OLLAMA),
+                createEntry("openai-1", Provider.OPENAI),
+                createEntry("deepseek-1", Provider.DEEPSEEK),
+            )
         val pool = ApiKeyPool(entries, auditEnabled = true)
 
         pool.getNextKey()
@@ -120,10 +123,11 @@ class MultiProviderIntegrationTest {
 
     @Test
     fun `pool with single provider should still work`() {
-        val entries = listOf(
-            createEntry("ollama-1", Provider.OLLAMA),
-            createEntry("ollama-2", Provider.OLLAMA)
-        )
+        val entries =
+            listOf(
+                createEntry("ollama-1", Provider.OLLAMA),
+                createEntry("ollama-2", Provider.OLLAMA),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.ROUND_ROBIN)
 
         val first = pool.getNextKey()

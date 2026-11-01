@@ -3,30 +3,33 @@ package com.cheroliv.graphify.apikey
 import graphify.apikey.ApiKeyEntry
 import graphify.apikey.QuotaConfig
 import graphify.apikey.QuotaType
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class QuotaTrackerTest {
-
     private lateinit var tracker: QuotaTracker
     private lateinit var apiKeyEntry: ApiKeyEntry
 
     @BeforeEach
     fun setUp() {
-        apiKeyEntry = ApiKeyEntry(
-            id = "test-key-1",
-            email = "test@example.com",
-            name = "Test Key",
-            keyRef = "TEST_API_KEY_1",
-            provider = Provider.GOOGLE,
-            services = listOf(ServiceType.TEXT_GENERATION),
-            quota = QuotaConfig(
-                limitType = QuotaType.REQUESTS,
-                limitValue = 100,
-                thresholdPercent = 80
+        apiKeyEntry =
+            ApiKeyEntry(
+                id = "test-key-1",
+                email = "test@example.com",
+                name = "Test Key",
+                keyRef = "TEST_API_KEY_1",
+                provider = Provider.GOOGLE,
+                services = listOf(ServiceType.TEXT_GENERATION),
+                quota =
+                    QuotaConfig(
+                        limitType = QuotaType.REQUESTS,
+                        limitValue = 100,
+                        thresholdPercent = 80,
+                    ),
             )
-        )
         tracker = QuotaTracker()
     }
 
@@ -59,9 +62,10 @@ class QuotaTrackerTest {
 
     @Test
     fun `test isQuotaExceeded with custom threshold`() {
-        val customEntry = apiKeyEntry.copy(
-            quota = apiKeyEntry.quota.copy(thresholdPercent = 50)
-        )
+        val customEntry =
+            apiKeyEntry.copy(
+                quota = apiKeyEntry.quota.copy(thresholdPercent = 50),
+            )
         repeat(50) { tracker.trackUsage(customEntry.id) }
         assertTrue(tracker.isQuotaExceeded(customEntry))
     }
@@ -77,14 +81,15 @@ class QuotaTrackerTest {
 
     @Test
     fun `test resetAll resets all tracked usages`() {
-        val entry2 = ApiKeyEntry(
-            id = "test-key-2",
-            email = "test2@example.com",
-            name = "Test Key 2",
-            keyRef = "TEST_API_KEY_2",
-            provider = Provider.MISTRAL,
-            services = listOf(ServiceType.TEXT_GENERATION)
-        )
+        val entry2 =
+            ApiKeyEntry(
+                id = "test-key-2",
+                email = "test2@example.com",
+                name = "Test Key 2",
+                keyRef = "TEST_API_KEY_2",
+                provider = Provider.MISTRAL,
+                services = listOf(ServiceType.TEXT_GENERATION),
+            )
 
         tracker.trackUsage(apiKeyEntry.id)
         tracker.trackUsage(apiKeyEntry.id)
@@ -112,14 +117,15 @@ class QuotaTrackerTest {
 
     @Test
     fun `test track usage for multiple keys independently`() {
-        val entry2 = ApiKeyEntry(
-            id = "test-key-2",
-            email = "test2@example.com",
-            name = "Test Key 2",
-            keyRef = "TEST_API_KEY_2",
-            provider = Provider.MISTRAL,
-            services = listOf(ServiceType.TEXT_GENERATION)
-        )
+        val entry2 =
+            ApiKeyEntry(
+                id = "test-key-2",
+                email = "test2@example.com",
+                name = "Test Key 2",
+                keyRef = "TEST_API_KEY_2",
+                provider = Provider.MISTRAL,
+                services = listOf(ServiceType.TEXT_GENERATION),
+            )
 
         tracker.trackUsage(apiKeyEntry.id)
         tracker.trackUsage(apiKeyEntry.id)
@@ -131,14 +137,15 @@ class QuotaTrackerTest {
 
     @Test
     fun `test isQuotaExceeded for unknown key returns false`() {
-        val unknownEntry = ApiKeyEntry(
-            id = "unknown-key",
-            email = "unknown@example.com",
-            name = "Unknown Key",
-            keyRef = "UNKNOWN_KEY",
-            provider = Provider.GROQ,
-            services = listOf(ServiceType.TEXT_GENERATION)
-        )
+        val unknownEntry =
+            ApiKeyEntry(
+                id = "unknown-key",
+                email = "unknown@example.com",
+                name = "Unknown Key",
+                keyRef = "UNKNOWN_KEY",
+                provider = Provider.GROQ,
+                services = listOf(ServiceType.TEXT_GENERATION),
+            )
         assertFalse(tracker.isQuotaExceeded(unknownEntry))
     }
 }

@@ -16,7 +16,7 @@ class ApiKeyPool(
     private val rotationStrategy: RotationStrategy = RotationStrategy.ROUND_ROBIN,
     private val fallbackEnabled: Boolean = true,
     autoResetEnabled: Boolean = true,
-    auditEnabled: Boolean = true
+    auditEnabled: Boolean = true,
 ) {
     private val currentIndex = AtomicInteger(0)
     private val tracker: QuotaTracker = QuotaTracker()
@@ -34,12 +34,13 @@ class ApiKeyPool(
             throw IllegalStateException("API Key Pool is empty")
         }
 
-        val selectedEntry = when (rotationStrategy) {
-            RotationStrategy.ROUND_ROBIN -> getNextRoundRobin()
-            RotationStrategy.LEAST_USED -> getNextLeastUsed()
-            RotationStrategy.WEIGHTED -> getNextWeighted()
-            RotationStrategy.SMART -> getNextSmart()
-        }
+        val selectedEntry =
+            when (rotationStrategy) {
+                RotationStrategy.ROUND_ROBIN -> getNextRoundRobin()
+                RotationStrategy.LEAST_USED -> getNextLeastUsed()
+                RotationStrategy.WEIGHTED -> getNextWeighted()
+                RotationStrategy.SMART -> getNextSmart()
+            }
 
         tracker.trackUsage(selectedEntry.id)
         val usageCount = tracker.getUsage(selectedEntry.id)
@@ -60,11 +61,10 @@ class ApiKeyPool(
         return entries[index % entries.size]
     }
 
-    private fun getNextLeastUsed(): ApiKeyEntry {
-        return entries.minByOrNull { entry ->
+    private fun getNextLeastUsed(): ApiKeyEntry =
+        entries.minByOrNull { entry ->
             tracker.getUsage(entry.id)
         } ?: entries.first()
-    }
 
     private fun getNextWeighted(): ApiKeyEntry {
         val totalWeight = entries.sumOf { it.metadata["weight"]?.toDoubleOrNull() ?: 1.0 }
@@ -83,13 +83,15 @@ class ApiKeyPool(
         val available = entries.filter { !tracker.isQuotaExceeded(it) }
         val candidates = available.ifEmpty { entries }
 
-        val maxRemaining = candidates.maxOfOrNull { entry ->
-            entry.quota.limitValue - tracker.getUsage(entry.id)
-        } ?: return candidates.first()
+        val maxRemaining =
+            candidates.maxOfOrNull { entry ->
+                entry.quota.limitValue - tracker.getUsage(entry.id)
+            } ?: return candidates.first()
 
-        val topCandidates = candidates.filter { entry ->
-            entry.quota.limitValue - tracker.getUsage(entry.id) == maxRemaining
-        }
+        val topCandidates =
+            candidates.filter { entry ->
+                entry.quota.limitValue - tracker.getUsage(entry.id) == maxRemaining
+            }
 
         if (topCandidates.size == 1) return topCandidates.first()
 
@@ -105,9 +107,7 @@ class ApiKeyPool(
         return topCandidates.last()
     }
 
-    fun isQuotaExceeded(entry: ApiKeyEntry): Boolean {
-        return tracker.isQuotaExceeded(entry)
-    }
+    fun isQuotaExceeded(entry: ApiKeyEntry): Boolean = tracker.isQuotaExceeded(entry)
 
     fun getAllKeys(): List<ApiKeyEntry> = entries
 
@@ -119,9 +119,7 @@ class ApiKeyPool(
         tracker.resetAll()
     }
 
-    fun getUsageCount(entryId: String): Long {
-        return tracker.getUsage(entryId)
-    }
+    fun getUsageCount(entryId: String): Long = tracker.getUsage(entryId)
 
     fun getTracker(): QuotaTracker = tracker
 
@@ -129,9 +127,7 @@ class ApiKeyPool(
 
     fun getAuditLogger(): QuotaAuditLogger = auditLogger
 
-    fun getUsagePercentage(entry: ApiKeyEntry): Double {
-        return tracker.getUsagePercentage(entry)
-    }
+    fun getUsagePercentage(entry: ApiKeyEntry): Double = tracker.getUsagePercentage(entry)
 
     fun manualReset(entryId: String) {
         resetManager.manualReset(entryId)

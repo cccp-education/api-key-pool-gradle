@@ -3,16 +3,13 @@ package com.cheroliv.graphify.apikey
 import graphify.apikey.ApiKeyEntry
 
 class QuotaTracker {
-
     private val usageCounts = mutableMapOf<String, Long>()
 
     fun trackUsage(entryId: String) {
         usageCounts[entryId] = (usageCounts[entryId] ?: 0) + 1
     }
 
-    fun getUsage(entryId: String): Long {
-        return usageCounts[entryId] ?: 0
-    }
+    fun getUsage(entryId: String): Long = usageCounts[entryId] ?: 0
 
     fun isQuotaExceeded(entry: ApiKeyEntry): Boolean {
         val quota = entry.quota

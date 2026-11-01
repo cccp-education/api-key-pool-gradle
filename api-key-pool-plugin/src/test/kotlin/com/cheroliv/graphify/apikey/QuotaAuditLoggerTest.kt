@@ -4,31 +4,33 @@ import graphify.apikey.ApiKeyEntry
 import graphify.apikey.AuditEventType
 import graphify.apikey.QuotaConfig
 import graphify.apikey.QuotaType
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class QuotaAuditLoggerTest {
-
     private lateinit var logger: QuotaAuditLogger
     private lateinit var apiKeyEntry: ApiKeyEntry
 
     @BeforeEach
     fun setUp() {
         logger = QuotaAuditLogger()
-        apiKeyEntry = ApiKeyEntry(
-            id = "test-key-1",
-            email = "test@example.com",
-            name = "Test Key",
-            keyRef = "TEST_API_KEY_1",
-            provider = Provider.GOOGLE,
-            services = listOf(ServiceType.TEXT_GENERATION),
-            quota = QuotaConfig(
-                limitType = QuotaType.REQUESTS,
-                limitValue = 100,
-                thresholdPercent = 80
+        apiKeyEntry =
+            ApiKeyEntry(
+                id = "test-key-1",
+                email = "test@example.com",
+                name = "Test Key",
+                keyRef = "TEST_API_KEY_1",
+                provider = Provider.GOOGLE,
+                services = listOf(ServiceType.TEXT_GENERATION),
+                quota =
+                    QuotaConfig(
+                        limitType = QuotaType.REQUESTS,
+                        limitValue = 100,
+                        thresholdPercent = 80,
+                    ),
             )
-        )
     }
 
     @Test
@@ -61,14 +63,15 @@ class QuotaAuditLoggerTest {
 
     @Test
     fun `test logRotation adds entry to logs`() {
-        val toEntry = ApiKeyEntry(
-            id = "test-key-2",
-            email = "test2@example.com",
-            name = "Test Key 2",
-            keyRef = "TEST_API_KEY_2",
-            provider = Provider.MISTRAL,
-            services = listOf(ServiceType.TEXT_GENERATION)
-        )
+        val toEntry =
+            ApiKeyEntry(
+                id = "test-key-2",
+                email = "test2@example.com",
+                name = "Test Key 2",
+                keyRef = "TEST_API_KEY_2",
+                provider = Provider.MISTRAL,
+                services = listOf(ServiceType.TEXT_GENERATION),
+            )
         logger.logRotation(apiKeyEntry, toEntry, "quota_exceeded")
         assertEquals(1, logger.getLogCount())
         assertEquals(AuditEventType.ROTATION, logger.getLogs().first().eventType)
@@ -79,14 +82,15 @@ class QuotaAuditLoggerTest {
         logger.logUsage(apiKeyEntry, 1)
         logger.logUsage(apiKeyEntry, 2)
 
-        val otherEntry = ApiKeyEntry(
-            id = "test-key-2",
-            email = "test2@example.com",
-            name = "Test Key 2",
-            keyRef = "TEST_API_KEY_2",
-            provider = Provider.MISTRAL,
-            services = listOf(ServiceType.TEXT_GENERATION)
-        )
+        val otherEntry =
+            ApiKeyEntry(
+                id = "test-key-2",
+                email = "test2@example.com",
+                name = "Test Key 2",
+                keyRef = "TEST_API_KEY_2",
+                provider = Provider.MISTRAL,
+                services = listOf(ServiceType.TEXT_GENERATION),
+            )
         logger.logUsage(otherEntry, 1)
 
         assertEquals(2, logger.getLogsForEntry(apiKeyEntry.id).size)

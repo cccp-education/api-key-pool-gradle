@@ -2,10 +2,11 @@ package com.cheroliv.graphify.apikey
 
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class RateLimitHeadersParserTest {
-
     @Test
     fun `should parse X-RateLimit-Remaining header`() {
         val headers = mapOf("X-RateLimit-Remaining" to "42")
@@ -40,24 +41,28 @@ class RateLimitHeadersParserTest {
 
     @Test
     fun `should parse Retry-After header as HTTP date`() {
-        val futureDate = java.time.ZonedDateTime.now(java.time.ZoneOffset.UTC)
-            .plusSeconds(3600)
-            .format(java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME)
+        val futureDate =
+            java.time.ZonedDateTime
+                .now(java.time.ZoneOffset.UTC)
+                .plusSeconds(3600)
+                .format(java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME)
         val headers = mapOf("Retry-After" to futureDate)
         val result = RateLimitHeadersParser.parse(headers)
 
-        assertEquals(true, result.retryAfterSeconds!! > 0)
-        assertEquals(true, result.retryAfterSeconds!! <= 3600)
+        val retryAfter = assertNotNull(result.retryAfterSeconds, "Retry-After must be parsed")
+        assertTrue(retryAfter > 0)
+        assertTrue(retryAfter <= 3600)
     }
 
     @Test
     fun `should parse all headers together`() {
-        val headers = mapOf(
-            "X-RateLimit-Limit" to "1000",
-            "X-RateLimit-Remaining" to "350",
-            "X-RateLimit-Reset" to "1718300000",
-            "Retry-After" to "60"
-        )
+        val headers =
+            mapOf(
+                "X-RateLimit-Limit" to "1000",
+                "X-RateLimit-Remaining" to "350",
+                "X-RateLimit-Reset" to "1718300000",
+                "Retry-After" to "60",
+            )
         val result = RateLimitHeadersParser.parse(headers)
 
         assertEquals(1000, result.limit)
@@ -86,11 +91,12 @@ class RateLimitHeadersParserTest {
 
     @Test
     fun `should parse OpenAI-style rate limit headers`() {
-        val headers = mapOf(
-            "x-ratelimit-limit-requests" to "500",
-            "x-ratelimit-remaining-requests" to "499",
-            "x-ratelimit-reset-requests" to "1s"
-        )
+        val headers =
+            mapOf(
+                "x-ratelimit-limit-requests" to "500",
+                "x-ratelimit-remaining-requests" to "499",
+                "x-ratelimit-reset-requests" to "1s",
+            )
         val result = RateLimitHeadersParser.parse(headers)
 
         assertEquals(500, result.limit)
@@ -99,11 +105,12 @@ class RateLimitHeadersParserTest {
 
     @Test
     fun `should parse Anthropic-style rate limit headers`() {
-        val headers = mapOf(
-            "anthropic-ratelimit-requests-limit" to "1000",
-            "anthropic-ratelimit-requests-remaining" to "998",
-            "anthropic-ratelimit-requests-reset" to "2025-06-13T12:00:00Z"
-        )
+        val headers =
+            mapOf(
+                "anthropic-ratelimit-requests-limit" to "1000",
+                "anthropic-ratelimit-requests-remaining" to "998",
+                "anthropic-ratelimit-requests-reset" to "2025-06-13T12:00:00Z",
+            )
         val result = RateLimitHeadersParser.parse(headers)
 
         assertEquals(1000, result.limit)
@@ -112,11 +119,12 @@ class RateLimitHeadersParserTest {
 
     @Test
     fun `should parse DeepSeek-style rate limit headers`() {
-        val headers = mapOf(
-            "x-ds-ratelimit-limit" to "200",
-            "x-ds-ratelimit-remaining" to "150",
-            "x-ds-ratelimit-reset" to "3600"
-        )
+        val headers =
+            mapOf(
+                "x-ds-ratelimit-limit" to "200",
+                "x-ds-ratelimit-remaining" to "150",
+                "x-ds-ratelimit-reset" to "3600",
+            )
         val result = RateLimitHeadersParser.parse(headers)
 
         assertEquals(200, result.limit)
@@ -142,10 +150,11 @@ class RateLimitHeadersParserTest {
 
     @Test
     fun `should calculate usage percentage`() {
-        val headers = mapOf(
-            "X-RateLimit-Limit" to "100",
-            "X-RateLimit-Remaining" to "25"
-        )
+        val headers =
+            mapOf(
+                "X-RateLimit-Limit" to "100",
+                "X-RateLimit-Remaining" to "25",
+            )
         val result = RateLimitHeadersParser.parse(headers)
 
         assertEquals(75.0, result.usagePercent)

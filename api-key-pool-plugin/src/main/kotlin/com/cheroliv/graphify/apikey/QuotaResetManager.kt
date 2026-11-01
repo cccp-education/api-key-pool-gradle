@@ -6,7 +6,7 @@ import java.time.LocalDateTime
 
 class QuotaResetManager(
     private val tracker: QuotaTracker,
-    private val autoResetEnabled: Boolean = true
+    private val autoResetEnabled: Boolean = true,
 ) {
     private val resetTimestamps = mutableMapOf<String, LocalDateTime>()
     private val resetCounts = mutableMapOf<String, Int>()
@@ -56,13 +56,9 @@ class QuotaResetManager(
         resetCounts[entryId] = (resetCounts[entryId] ?: 0) + 1
     }
 
-    fun getResetCount(entryId: String): Int {
-        return resetCounts[entryId] ?: 0
-    }
+    fun getResetCount(entryId: String): Int = resetCounts[entryId] ?: 0
 
-    fun getLastReset(entryId: String): LocalDateTime? {
-        return resetTimestamps[entryId]
-    }
+    fun getLastReset(entryId: String): LocalDateTime? = resetTimestamps[entryId]
 
     private fun shouldResetDaily(entryId: String): Boolean {
         val lastReset = resetTimestamps[entryId]
@@ -73,10 +69,23 @@ class QuotaResetManager(
         val lastReset = resetTimestamps[entryId]
         if (lastReset == null) return true
 
-        val currentWeek = LocalDateTime.now().toLocalDate().atStartOfDay()
-            .with(java.time.temporal.TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY))
-        val lastResetWeek = lastReset.toLocalDate().atStartOfDay()
-            .with(java.time.temporal.TemporalAdjusters.previousOrSame(java.time.DayOfWeek.MONDAY))
+        val currentWeek =
+            LocalDateTime
+                .now()
+                .toLocalDate()
+                .atStartOfDay()
+                .with(
+                    java.time.temporal.TemporalAdjusters
+                        .previousOrSame(java.time.DayOfWeek.MONDAY),
+                )
+        val lastResetWeek =
+            lastReset
+                .toLocalDate()
+                .atStartOfDay()
+                .with(
+                    java.time.temporal.TemporalAdjusters
+                        .previousOrSame(java.time.DayOfWeek.MONDAY),
+                )
 
         return currentWeek > lastResetWeek
     }

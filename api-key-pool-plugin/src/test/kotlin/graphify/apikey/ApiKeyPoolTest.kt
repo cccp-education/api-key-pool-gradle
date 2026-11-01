@@ -1,13 +1,13 @@
 package graphify.apikey
 
-import graphify.apikey.ApiKeyEntry
 import com.cheroliv.graphify.apikey.ApiKeyPool
-import graphify.apikey.AuditEventType
 import com.cheroliv.graphify.apikey.Provider
-import graphify.apikey.QuotaConfig
-import graphify.apikey.ResetPolicy
 import com.cheroliv.graphify.apikey.RotationStrategy
 import com.cheroliv.graphify.apikey.ServiceType
+import graphify.apikey.ApiKeyEntry
+import graphify.apikey.AuditEventType
+import graphify.apikey.QuotaConfig
+import graphify.apikey.ResetPolicy
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -15,30 +15,29 @@ import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class ApiKeyPoolTest {
-
     private fun createTestEntry(
         id: String = "test-key",
         email: String = "test@example.com",
         name: String = "Test Key",
-        quota: QuotaConfig = QuotaConfig()
-    ): ApiKeyEntry {
-        return ApiKeyEntry(
+        quota: QuotaConfig = QuotaConfig(),
+    ): ApiKeyEntry =
+        ApiKeyEntry(
             id = id,
             email = email,
             name = name,
             keyRef = "TEST_KEY_REF",
             provider = Provider.GOOGLE,
             services = listOf(ServiceType.CHAT_COMPLETION),
-            quota = quota
+            quota = quota,
         )
-    }
 
     @Test
     fun `should create pool with entries`() {
-        val entries = listOf(
-            createTestEntry("key1"),
-            createTestEntry("key2")
-        )
+        val entries =
+            listOf(
+                createTestEntry("key1"),
+                createTestEntry("key2"),
+            )
         val pool = ApiKeyPool(entries)
 
         assertEquals(2, pool.size())
@@ -56,11 +55,12 @@ class ApiKeyPoolTest {
 
     @Test
     fun `should rotate keys in round robin fashion`() {
-        val entries = listOf(
-            createTestEntry("key1"),
-            createTestEntry("key2"),
-            createTestEntry("key3")
-        )
+        val entries =
+            listOf(
+                createTestEntry("key1"),
+                createTestEntry("key2"),
+                createTestEntry("key3"),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.ROUND_ROBIN)
 
         val first = pool.getNextKey()
@@ -76,11 +76,12 @@ class ApiKeyPoolTest {
 
     @Test
     fun `should return least used key with LEAST_USED strategy`() {
-        val entries = listOf(
-            createTestEntry("key1"),
-            createTestEntry("key2"),
-            createTestEntry("key3")
-        )
+        val entries =
+            listOf(
+                createTestEntry("key1"),
+                createTestEntry("key2"),
+                createTestEntry("key3"),
+            )
         val pool = ApiKeyPool(entries, RotationStrategy.LEAST_USED)
 
         val first = pool.getNextKey()
@@ -92,10 +93,11 @@ class ApiKeyPoolTest {
 
     @Test
     fun `should track usage counts`() {
-        val entries = listOf(
-            createTestEntry("key1"),
-            createTestEntry("key2")
-        )
+        val entries =
+            listOf(
+                createTestEntry("key1"),
+                createTestEntry("key2"),
+            )
         val pool = ApiKeyPool(entries)
 
         pool.getNextKey()
@@ -108,10 +110,11 @@ class ApiKeyPoolTest {
 
     @Test
     fun `should reset usage counts`() {
-        val entries = listOf(
-            createTestEntry("key1"),
-            createTestEntry("key2")
-        )
+        val entries =
+            listOf(
+                createTestEntry("key1"),
+                createTestEntry("key2"),
+            )
         val pool = ApiKeyPool(entries)
 
         pool.getNextKey()
@@ -124,13 +127,15 @@ class ApiKeyPoolTest {
 
     @Test
     fun `should detect quota exceeded`() {
-        val quota = QuotaConfig(
-            limitValue = 100,
-            thresholdPercent = 80
-        )
-        val entries = listOf(
-            createTestEntry("key1", quota = quota)
-        )
+        val quota =
+            QuotaConfig(
+                limitValue = 100,
+                thresholdPercent = 80,
+            )
+        val entries =
+            listOf(
+                createTestEntry("key1", quota = quota),
+            )
         val pool = ApiKeyPool(entries, autoResetEnabled = false)
 
         assertFalse(pool.isQuotaExceeded(entries[0]))
@@ -145,13 +150,15 @@ class ApiKeyPoolTest {
 
     @Test
     fun `should respect custom threshold percent`() {
-        val quota = QuotaConfig(
-            limitValue = 100,
-            thresholdPercent = 50
-        )
-        val entries = listOf(
-            createTestEntry("key1", quota = quota)
-        )
+        val quota =
+            QuotaConfig(
+                limitValue = 100,
+                thresholdPercent = 50,
+            )
+        val entries =
+            listOf(
+                createTestEntry("key1", quota = quota),
+            )
         val pool = ApiKeyPool(entries, autoResetEnabled = false)
 
         for (i in 1..49) {
@@ -172,23 +179,26 @@ class ApiKeyPoolTest {
 
     @Test
     fun `should respect fallback disabled setting`() {
-        val pool = ApiKeyPool(
-            entries = listOf(createTestEntry()),
-            fallbackEnabled = false
-        )
+        val pool =
+            ApiKeyPool(
+                entries = listOf(createTestEntry()),
+                fallbackEnabled = false,
+            )
         assertFalse(pool.isFallbackEnabled())
     }
 
     @Test
     fun `should perform automatic reset when quota exceeded`() {
-        val quota = QuotaConfig(
-            limitValue = 100,
-            thresholdPercent = 80,
-            resetPolicy = ResetPolicy.DAILY
-        )
-        val entries = listOf(
-            createTestEntry("key1", quota = quota)
-        )
+        val quota =
+            QuotaConfig(
+                limitValue = 100,
+                thresholdPercent = 80,
+                resetPolicy = ResetPolicy.DAILY,
+            )
+        val entries =
+            listOf(
+                createTestEntry("key1", quota = quota),
+            )
         val pool = ApiKeyPool(entries, autoResetEnabled = true)
 
         for (i in 1..80) {
@@ -215,14 +225,16 @@ class ApiKeyPoolTest {
 
     @Test
     fun `should log quota exceeded and reset events`() {
-        val quota = QuotaConfig(
-            limitValue = 100,
-            thresholdPercent = 80,
-            resetPolicy = ResetPolicy.DAILY
-        )
-        val entries = listOf(
-            createTestEntry("key1", quota = quota)
-        )
+        val quota =
+            QuotaConfig(
+                limitValue = 100,
+                thresholdPercent = 80,
+                resetPolicy = ResetPolicy.DAILY,
+            )
+        val entries =
+            listOf(
+                createTestEntry("key1", quota = quota),
+            )
         val pool = ApiKeyPool(entries, autoResetEnabled = true, auditEnabled = true)
 
         for (i in 1..80) {
