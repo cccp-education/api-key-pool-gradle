@@ -2,9 +2,9 @@ plugins {
     `java-library`
     `maven-publish`
     alias(libs.plugins.kotlin.jvm)
-    id("education.cccp.build.publishing") version "0.0.12"
+    id("education.cccp.build.publishing") version "0.0.13"
     // LINT-ADOPT-13 (S-336) — static analysis gate (ktlint in `check`).
-    id("education.cccp.build.lint") version "0.0.12"
+    id("education.cccp.build.lint") version "0.0.13"
 }
 
 group = "education.cccp"
