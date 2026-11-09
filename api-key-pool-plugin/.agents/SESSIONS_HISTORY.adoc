@@ -15,3 +15,9 @@
 _Pré-gouvernance_ : L'extraction depuis plantuml-gradle et la conversion Pattern A
 (sessions 001, 002-cleanup) sont documentées dans la gouvernance graphify-plugin.
 
+
+== Session 008 — JitPack mirror (CNV-16) — 2026-11-09
+
+Publication JitPack de api-key-pool 0.0.2 (coordonnée single-module com.github.cccp-education:api-key-pool-gradle:0.0.2). JitPack : 0.0.2 — POM/jar HTTP 200. Shim `useModule` pour
+`education.cccp.build.*` (tag JitPack `0.0.15`). Rapport
+`api-key-pool-plugin/.agents/sessions/008-jitpack-mirror.adoc`.
