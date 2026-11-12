@@ -13,7 +13,7 @@ _Session en cours_ : 009 — (dormant, maintenance)
 '''
 == RÈGLES ABSOLUES (résumé)
 
-=== 1. COMMITS/GIT — INTERDICTION FORMELLE sans permission
+=== 1. COMMITS/GIT — AUTORISÉS (décision pilote 2026-11-11 : tous repos publics)
 === 2. FICHIERS DE CONFIGURATION — RÈGLE ABSOLUE DE SÛRETÉ (backup avant modif)
 === 3. TESTS EN FIN DE SESSION — INTERDICTION FORMELLE
 === 4. PROCÉDURE DE FIN DE SESSION — 6 ÉTAPES OBLIGATOIRES
