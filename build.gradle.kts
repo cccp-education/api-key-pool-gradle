@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    implementation("education.cccp:api-key-pool:0.0.1")
+    implementation("com.github.cccp-education:api-key-pool-gradle:0.0.1")
     implementation(kotlin("stdlib-jdk8"))
 }
 
