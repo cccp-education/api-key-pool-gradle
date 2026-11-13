@@ -35,3 +35,8 @@ version. `foundry/private/**` et `office/**` exclus.
 - Dormant. Réactiver uniquement sur besoin cross-borough.
 - Toute publication future passe par JitPack (tag `vX.Y.Z`, version `X.Y.Z`).
 - Ne pas réactiver nmcp/Portal par artefact : bascule globale seulement (D10).
+
+== GBL-013 (clôture) — 2026-11-14
+Portabilité CI livrée : image \`cccp-ci-base\`, \`ci/run.sh\`, adapter fin.
+Rapport \`.agents/sessions/010-gbl-013-wave2.adoc\`. Reste : US-5→US-9 (cadrage racine
+\`.agents/CADRAGE_EPIC_GBL_013_PORTABILITE_CI.adoc\`).

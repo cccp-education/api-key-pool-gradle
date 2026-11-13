@@ -1,0 +1,15 @@
+= Session 010 — GBL-013 vague 2 : gate lint dans l'image
+:date: 2026-11-14
+:borough: Liberty (api-key-pool-gradle)
+
+== Livré
+
+* `ci/run.sh` (`fast` = `ktlintCheck` dans `api-key-pool-plugin`).
+* `.github/workflows/lint.yml` migré : `container:` épinglé sur
+  `cccpeducation/cccp-ci-base@sha256:4722c1bc…`, suppression du `defaults`
+  (`working-directory`) et de `setup-java`, `ci/run.sh fast`. Run `43497005626`
+  **VERT**.
+
+== Note
+
+Borough dormant ; aucune autre modification de code.

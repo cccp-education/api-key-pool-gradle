@@ -129,3 +129,6 @@ repositories de résolution ; `nmcpSettings` conservé comme code de rollback
 (D10), sans publication Central effective. Coordonnée servie :
 `com.github.cccp-education:api-key-pool-gradle:0.0.2`. CI verte. Borough
 dormant. Rapport `.agents/sessions/009-cnv-17-jitpack-channel.adoc`.
+
+== Session 010 — GBL-013 (clôture) — 2026-11-14
+Gate lint dans l'image ; run 43497005626.

@@ -32,3 +32,7 @@ repositories de résolution ; `nmcpSettings` conservé comme code de rollback
 `com.github.cccp-education:api-key-pool-gradle:0.0.2`. CI verte ; aucun test
 local. Borough dormant. Rapport
 `.agents/sessions/009-cnv-17-jitpack-channel.adoc`.
+
+== Session 010 — GBL-013 vague 2 : gate lint dans l'image — 2026-11-14
+
+ci/run.sh (fast = ktlintCheck) + lint.yml migré (container cccp-ci-base@sha256:4722…, plus de defaults, sans setup-java). Run 43497005626 VERT. Rapport `.agents/sessions/010-gbl-013-wave2.adoc`.
