@@ -36,3 +36,9 @@ local. Borough dormant. Rapport
 == Session 010 — GBL-013 vague 2 : gate lint dans l'image — 2026-11-14
 
 ci/run.sh (fast = ktlintCheck) + lint.yml migré (container cccp-ci-base@sha256:4722…, plus de defaults, sans setup-java). Run 43497005626 VERT. Rapport `.agents/sessions/010-gbl-013-wave2.adoc`.
+
+== Session 011 — EAGER : publication JitPack canal unique — 2026-11-14
+
+Alignement EAGER : JitPack canal unique ; Maven Central/Sonatype et
+Gradle Plugin Portal **retirés**. Aucun code, aucun test, aucune
+publication. Rapport `.agents/sessions/011-eager-publication-jitpack-only.adoc`.

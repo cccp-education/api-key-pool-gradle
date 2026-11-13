@@ -132,3 +132,9 @@ dormant. Rapport `.agents/sessions/009-cnv-17-jitpack-channel.adoc`.
 
 == Session 010 — GBL-013 (clôture) — 2026-11-14
 Gate lint dans l'image ; run 43497005626.
+
+== Session 011 — EAGER : publication JitPack canal unique (2026-11-14)
+
+Alignement EAGER (AGENT/PROMPT_REPRISE) : JitPack canal unique ;
+Central/Portal retirés. Zéro code. Rapport
+`.agents/sessions/011-eager-publication-jitpack-only.adoc`.
