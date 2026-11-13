@@ -1,0 +1,51 @@
+= Session 009 — CNV-17 : JitPack canal unique (publication)
+:toc: left
+:icons: font
+
+:session: 009
+:date: 2026-11-13
+:type: cross-borough / JitPack
+:statut: TERMINÉE
+
+== Mission
+
+Clôture de **CNV-17** (décision pilote « la totalité vers JitPack ») pour
+`api-key-pool-gradle` (Liberty) : JitPack est le **canal unique** des artefacts
+publics ; Maven Central (nmcp) et le Gradle Plugin Portal ne sont plus publiés
+pour `foundry/public/**`. Un artefact = un canal = un nom = une version.
+`foundry/private/**` et `office/**` exclus.
+
+== Changements (état mesuré)
+
+* `api-key-pool-plugin/settings.gradle.kts` et
+  `api-key-pool-gradle/settings.gradle.kts` : shim `useModule` des conventions
+  `education.cccp.build.*` vers
+  `com.github.cccp-education.conventions-gradle:conventions-plugin:0.0.17`
+  (JitPack) + `maven("https://jitpack.io")` en `pluginManagement` et
+  `dependencyResolutionManagement`.
+* `api-key-pool-plugin/build.gradle.kts` : conventions `publishing` + `lint`
+  déclarées `0.0.14`, résolues via le shim `0.0.17` ; version publiée `0.0.2`.
+  Le bloc `nmcpSettings` est **conservé** (code de rollback D10), sans
+  publication Central effective. Coordonnée servie (mono-module) :
+  `com.github.cccp-education:api-key-pool-gradle:0.0.2` (S-008).
+  Aucun code Kotlin modifié.
+
+== Preuves
+
+* Lecture du build : plus aucune coordonnée `education.cccp:<artefact>` en
+  dépendance ; conventions résolues en coordonnées JitPack.
+* Table HTTP 200 du cadrage CNV-17
+  (`conventions-gradle/conventions-plugin/.agents/CADRAGE_EPIC_CNV_17_JITPACK_PRIMARY.adoc`
+  §3.3) : `api-key-pool-gradle 0.0.2` ✅.
+* CI verte (run de vague S-045) ; aucun test local (Local = Build, Tests = CI).
+
+== Fichiers touchés (documentation uniquement)
+
+`.agents/sessions/009-cnv-17-jitpack-channel.adoc`, `.agents/SESSIONS_HISTORY.adoc`,
+`.agents/INDEX.adoc`, `BACKLOG.adoc`, `PROMPT_REPRISE.adoc`.
+
+== Suite
+
+Maintenance — borough **dormant**. Réactivation uniquement sur besoin
+cross-borough. `EPIC PUB` garde une valeur historique ; la cible de publication
+est JitPack, pas Maven Central.

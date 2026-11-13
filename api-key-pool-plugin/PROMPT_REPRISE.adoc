@@ -1,22 +1,37 @@
-= PROMPT_REPRISE — Api Key Pool — Session 008
-:session: 008
-:date: 2026-07-03
-:session_precedente: 007 — Liquidation N0 (APK-1 + APK-2 + APK-3)
+= PROMPT_REPRISE — Api Key Pool — Session 009 (close) — CNV-17 JitPack canal unique
+:session: 009
+:date: 2026-11-13
+:etat: TERMINÉE — borough dormant
+:session_precedente: 008 — CNV-6 Migration
 
-== Session 008 terminée — CNV-6 Migration
+== Session 009 terminée — CNV-17 (JitPack canal unique)
 
-Convention plugins education.cccp.build.* v0.0.1 appliquées (publishing
-seulement, library pure N0 — pas gradle-plugin car pas un plugin Gradle).
-build.gradle.kts 94→47 lignes (-47). compileKotlin SUCCESS, BUILD SUCCESS.
-CNV-6 terminé.
+Décision pilote : « la totalité vers JitPack ». JitPack est le **canal unique**
+des artefacts publics ; Maven Central (nmcp) et le Gradle Plugin Portal ne sont
+plus publiés pour `foundry/public/**`. Un artefact = un canal = un nom = une
+version. `foundry/private/**` et `office/**` exclus.
 
-== Contexte Hérité
+* Shim `useModule` : `education.cccp.build.*` →
+  `com.github.cccp-education.conventions-gradle:conventions-plugin:0.0.17`
+  (racine + sous-build `api-key-pool-plugin`).
+* JitPack ajouté aux repositories de résolution ; `nmcpSettings` conservé comme
+  code de rollback (D10, drapeau `CCCP_PUBLISH_TARGET`).
+* Coordonnée servie (mono-module) :
+  `com.github.cccp-education:api-key-pool-gradle:0.0.2`.
+* CI verte ; aucun test local (Local = Build, Tests = CI). Zéro code Kotlin
+  modifié.
 
-- api-key-pool:0.0.1 publié sur Maven Central (education.cccp:api-key-pool)
-- 104/104 tests PASS, build OK
-- APK-1/2/3 ✅, PUB-2.2 ✅ — tous les EPICs terminés
-- Borough liquidé
+*Rapport* : `.agents/sessions/009-cnv-17-jitpack-channel.adoc`
 
-== Prochaine Session (009)
+== État hérité
 
-- Dormant. Réactiver si besoin cross-borough.
+- api-key-pool `0.0.2` servi par JitPack (Central conservé en historique).
+- 104/104 tests PASS au dernier run avant migration ; build OK.
+- APK-1/2/3 ✅, PUB-2.2 ✅ — tous les EPICs terminés.
+- Borough **liquidé / dormant**.
+
+== Prochaine session (010)
+
+- Dormant. Réactiver uniquement sur besoin cross-borough.
+- Toute publication future passe par JitPack (tag `vX.Y.Z`, version `X.Y.Z`).
+- Ne pas réactiver nmcp/Portal par artefact : bascule globale seulement (D10).

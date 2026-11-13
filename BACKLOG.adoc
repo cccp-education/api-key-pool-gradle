@@ -47,3 +47,18 @@ Par :
 | Artefact | URL |
 |---|---|
 | api-key-pool | https://central.sonatype.com/artifact/education.cccp/api-key-pool |
+
+'''
+== Historique — Session 009 — CNV-17 (JitPack canal unique)
+
+* Décision pilote : JitPack = **canal unique** des artefacts publics. Maven
+  Central (nmcp) et le Gradle Plugin Portal ne sont plus publiés pour
+  `foundry/public/**` ; `foundry/private/**` et `office/**` exclus.
+* `api-key-pool 0.0.2` est servi en
+  `com.github.cccp-education:api-key-pool-gradle:0.0.2` (coordonnée
+  mono-module, artefact ≠ nom du module).
+* Shim `conventions-plugin:0.0.17` ; `nmcpSettings` conservé comme code de
+  rollback (D10), sans publication Central effective.
+* `EPIC PUB` (Central) reste un historique ; la cible de publication est
+  JitPack. Borough dormant.
+* Rapport : `.agents/sessions/009-cnv-17-jitpack-channel.adoc`

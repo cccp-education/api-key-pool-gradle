@@ -21,3 +21,14 @@ _Pré-gouvernance_ : L'extraction depuis plantuml-gradle et la conversion Patter
 Publication JitPack de api-key-pool 0.0.2 (coordonnée single-module com.github.cccp-education:api-key-pool-gradle:0.0.2). JitPack : 0.0.2 — POM/jar HTTP 200. Shim `useModule` pour
 `education.cccp.build.*` (tag JitPack `0.0.15`). Rapport
 `api-key-pool-plugin/.agents/sessions/008-jitpack-mirror.adoc`.
+
+== Session 009 — CNV-17 : JitPack canal unique — 2026-11-13
+
+JitPack devient le **canal unique** des artefacts publics (Central/Portal
+cessent d'être publiés pour `foundry/public/**`). Shim `useModule` aligné sur
+`conventions-plugin:0.0.17` (racine + sous-build), JitPack ajouté aux
+repositories de résolution ; `nmcpSettings` conservé comme code de rollback
+(D10). Coordonnée servie
+`com.github.cccp-education:api-key-pool-gradle:0.0.2`. CI verte ; aucun test
+local. Borough dormant. Rapport
+`.agents/sessions/009-cnv-17-jitpack-channel.adoc`.
