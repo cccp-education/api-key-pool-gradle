@@ -35,6 +35,10 @@ tasks.withType<Test> {
 
 publishingConventions {
     publicationType = "LIBRARY"
+    // Sonatype 130791 — the POM url/scm must point to the exact public
+    // repository, never to the organization root (classified "unreachable_repo").
+    website = "https://github.com/cccp-education/api-key-pool-gradle"
+    vcsUrl = "https://github.com/cccp-education/api-key-pool-gradle.git"
 }
 
 java {
