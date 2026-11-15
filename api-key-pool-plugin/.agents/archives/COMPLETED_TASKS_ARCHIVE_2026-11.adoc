@@ -2,3 +2,4 @@
 
 * GBL-013 — portabilité CI (session close) : voir `.agents/sessions/` (rapport dédié).
 * Session 011 — EAGER : publication JitPack canal unique (AGENT/PROMPT_REPRISE alignés ; Central/Portal retirés) — 2026-11-14.
+* Session 012 — GBL-014-5 (canal conditionnel `-Pchannel`, défaut `jitpack`) + GBL-014-4 (shim `conventions-plugin 0.0.19`) + GBL-013-10 (`checkout@v7`, `setup-gradle@v6`, image `cccp-ci-base@sha256:03ead378…` Node 26.13.1) — CI `Lint` verte sur les 4 commits — 2026-11-15.

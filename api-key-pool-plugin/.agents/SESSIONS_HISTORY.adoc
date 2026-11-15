@@ -42,3 +42,14 @@ ci/run.sh (fast = ktlintCheck) + lint.yml migré (container cccp-ci-base@sha256:
 Alignement EAGER : JitPack canal unique ; Maven Central/Sonatype et
 Gradle Plugin Portal **retirés**. Aucun code, aucun test, aucune
 publication. Rapport `.agents/sessions/011-eager-publication-jitpack-only.adoc`.
+
+== Session 012 — GBL-014-5 / GBL-014-4 / GBL-013-10 — 2026-11-15
+
+Canal de publication conditionnel (`-Pchannel`, défaut `jitpack`) sur
+`settings.gradle.kts` (racine + `api-key-pool-plugin`) : dépôt JitPack + shim
+`useModule(...)` seulement en `jitpack` ; `ci/run.sh` passe `-Pchannel`
+(`6443267`). Shim `conventions-plugin 0.0.19` (`8d66f6a`). `checkout@v7` +
+`setup-gradle@v6` (`5784758`) ; image `cccp-ci-base@sha256:03ead378…` Node
+26.13.1 (`0c4135b`). CI `Lint` verte sur les 4 commits. Zéro code de production
+modifié, zéro test local. Rapport
+`.agents/sessions/012-gbl-014-5-channel-rollout.adoc`.
